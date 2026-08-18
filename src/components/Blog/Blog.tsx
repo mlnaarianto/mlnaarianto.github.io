@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FaCalendarAlt, FaTag, FaArrowRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { FaCalendarAlt, FaTag, FaArrowRight, FaChevronLeft, FaChevronRight, FaKey } from 'react-icons/fa'
 import styles from './Blog.module.css'
 
 const blogPosts = [
@@ -41,7 +41,7 @@ const blogPosts = [
     excerpt: 'Learn how OAuth works and how to integrate social login services like Google, Meta, X, and Discord into your web application.',
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://api.iconify.design/lucide:key-round.svg?color=%233b82f6',
+    image: 'fa-key', // Menggunakan penanda khusus agar dirender dengan React Icons
     readTime: '9 min read'
   },
   {
@@ -121,7 +121,6 @@ export default function Blog() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Blog</h2>
         <div className={styles.underline} />
-        {/* Tambahan sub-teks penjelasan dari kuliah dan mandiri */}
         <p className={styles.sectionSubtitle}>
           Articles and technical write-ups covering insights from my academic journey and self-directed exploration.
         </p>
@@ -144,9 +143,15 @@ export default function Blog() {
       <div className={styles.blogGrid}>
         {paginatedPosts.map((post) => (
           <div key={post.id} className={styles.blogCard}>
-            {/* IMAGE */}
+            {/* IMAGE / ICON PLACEHOLDER */}
             <div className={styles.blogImage}>
-              <img src={post.image} alt={post.title} />
+              {post.image === 'fa-key' ? (
+                <div className={styles.iconPlaceholder}>
+                  <FaKey size={120} color="var(--primary-color)" />
+                </div>
+              ) : (
+                <img src={post.image} alt={post.title} />
+              )}
               <div className={styles.blogOverlay}>
                 <Link to={`/blog/${post.slug}`} className={styles.readMore}>
                   <FaArrowRight />

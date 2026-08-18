@@ -2,7 +2,14 @@ import { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
-const SECTIONS = ['home', 'about', 'skills', 'experience', 'projects', 'blog']
+const SECTIONS = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About Me' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'blog', label: 'Blog' }
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -70,8 +77,8 @@ export default function Navbar() {
       { rootMargin: '-50% 0px -50% 0px' }
     )
 
-    SECTIONS.forEach((id) => {
-      const el = document.getElementById(id)
+    SECTIONS.forEach((section) => {
+      const el = document.getElementById(section.id)
       if (el) observer.observe(el)
     })
 
@@ -112,9 +119,9 @@ export default function Navbar() {
     window.scrollTo({ top: y, behavior: 'smooth' })
   }
 
-  const handleNavClick = (section: string) => {
+  const handleNavClick = (sectionId: string) => {
     setMenuOpen(false)
-    localStorage.setItem('last-section', section)
+    localStorage.setItem('last-section', sectionId)
 
     if (isBlogDetail) {
       navigate(-1)
@@ -122,7 +129,7 @@ export default function Navbar() {
     }
 
     if (location.pathname === '/') {
-      scrollToSection(section)
+      scrollToSection(sectionId)
       return
     }
 
@@ -168,13 +175,13 @@ export default function Navbar() {
           {/* SECTION MENU */}
           {SECTIONS.map((section) => (
             <button
-              key={section}
+              key={section.id}
               className={`${styles.navLink} ${
-                active === section ? styles.active : ''
+                active === section.id ? styles.active : ''
               }`}
-              onClick={() => handleNavClick(section)}
+              onClick={() => handleNavClick(section.id)}
             >
-              {section.charAt(0).toUpperCase() + section.slice(1)}
+              {section.label}
             </button>
           ))}
 

@@ -82,8 +82,18 @@
   border-radius: 12px;
   margin-bottom: 40px;
   padding: 30px;
-  /* Dihilangkan box-shadow yang terlalu berat agar render HP lebih cepat */
   box-shadow: none; 
+}
+
+.heroIconPlaceholder {
+  width: 100%;
+  height: 300px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .content {
@@ -196,7 +206,8 @@
     gap: 10px;
   }
 
-  .heroImage {
+  .heroImage,
+  .heroIconPlaceholder {
     height: 220px;
     padding: 20px;
   }
@@ -223,7 +234,8 @@
     font-size: 1.8rem;
   }
 
-  .heroImage {
+  .heroImage,
+  .heroIconPlaceholder {
     height: 180px;
   }
 }

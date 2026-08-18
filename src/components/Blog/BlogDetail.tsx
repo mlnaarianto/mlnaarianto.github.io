@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import styles from './BlogDetail.module.css'
-import { FaArrowLeft, FaCalendarAlt, FaTag } from 'react-icons/fa'
+import { FaArrowLeft, FaCalendarAlt, FaTag, FaKey } from 'react-icons/fa'
 
 type BlogPost = {
   id: number
@@ -449,7 +449,7 @@ It provides a **secure**, **fast**, and **user-friendly authentication experienc
 `,
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://api.iconify.design/lucide:key-round.svg?color=%233b82f6',
+    image: 'fa-key',
     readTime: '9 min read'
   },
   {
@@ -825,11 +825,17 @@ export default function BlogDetail() {
           <span>{post.readTime}</span>
         </div>
 
-        <img
-          src={post.image}
-          alt={post.title}
-          className={styles.heroImage}
-        />
+        {post.image === 'fa-key' ? (
+          <div className={styles.heroIconPlaceholder}>
+            <FaKey size={150} color="var(--primary-color)" />
+          </div>
+        ) : (
+          <img
+            src={post.image}
+            alt={post.title}
+            className={styles.heroImage}
+          />
+        )}
 
         <div className={styles.content}>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
