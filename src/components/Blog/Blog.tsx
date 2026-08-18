@@ -41,7 +41,7 @@ const blogPosts = [
     excerpt: 'Learn how OAuth works and how to integrate social login services like Google, Meta, X, and Discord into your web application.',
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://unpkg.com/lucide-static@latest/icons/key-round.svg',
+    image: 'https://api.iconify.design/lucide:key-round.svg?color=%233b82f6',
     readTime: '9 min read'
   },
   {

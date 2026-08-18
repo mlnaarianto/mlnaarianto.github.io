@@ -449,7 +449,7 @@ It provides a **secure**, **fast**, and **user-friendly authentication experienc
 `,
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://unpkg.com/lucide-static@latest/icons/key-round.svg',
+    image: 'https://api.iconify.design/lucide:key-round.svg?color=%233b82f6',
     readTime: '9 min read'
   },
   {
