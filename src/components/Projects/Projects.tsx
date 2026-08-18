@@ -1,4 +1,3 @@
-import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
 import { FaExternalLinkAlt, FaGithub, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import styles from './Projects.module.css'
@@ -199,7 +198,6 @@ function ProjectImage({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
   const [filter, setFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -230,7 +228,7 @@ export default function Projects() {
   }
 
   return (
-    <section ref={ref} id="projects" className={`${styles.section} projects-section`}>
+    <section id="projects" className={`${styles.section} projects-section`}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.underline} />

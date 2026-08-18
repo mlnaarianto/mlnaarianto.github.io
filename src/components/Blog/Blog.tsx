@@ -1,4 +1,3 @@
-import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaCalendarAlt, FaTag, FaArrowRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
@@ -80,7 +79,6 @@ const blogPosts = [
 const itemsPerPage = 3
 
 export default function Blog() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
   const [filter, setFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -118,7 +116,7 @@ export default function Blog() {
   }
 
   return (
-    <section ref={ref} id="blog" className={`${styles.section} blog-section`}>
+    <section id="blog" className={`${styles.section} blog-section`}>
       {/* ===== HEADER ===== */}
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Blog</h2>

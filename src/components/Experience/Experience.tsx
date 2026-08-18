@@ -1,4 +1,3 @@
-import { useInView } from "react-intersection-observer";
 import styles from "./Experience.module.css";
 
 type ExperienceItem = {
@@ -75,16 +74,11 @@ const data: ExperienceItem[] = [
 ];
 
 export default function Experience() {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   const experiences = data.filter((item) => item.type === "experience");
   const certificates = data.filter((item) => item.type === "certificate");
 
   return (
-    <section ref={ref} id="experience" className={styles.section}>
+    <section id="experience" className={styles.section}>
       {/* HEADER */}
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Experience & Certificates</h2>
