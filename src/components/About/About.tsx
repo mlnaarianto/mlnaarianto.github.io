@@ -28,6 +28,10 @@ export default function About() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>About Me</h2>
         <div className={styles.underline} />
+        {/* Tambahan sub-teks penjelasan */}
+        <p className={styles.sectionSubtitle}>
+          Get to know more about my background, academic journey, and passion for software engineering.
+        </p>
       </div>
 
       <div className={styles.aboutContent}>

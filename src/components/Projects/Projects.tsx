@@ -232,6 +232,10 @@ export default function Projects() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.underline} />
+        {/* Tambahan sub-teks/deskripsi singkat di bawah judul */}
+        <p className={styles.sectionSubtitle}>
+          Here are some of the full-stack, mobile, and IoT projects I have built and worked on.
+        </p>
       </div>
 
       {/* FILTER */}

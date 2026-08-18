@@ -26,8 +26,17 @@
     var(--primary-color),
     var(--secondary-color)
   );
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
   border-radius: 2px;
+}
+
+.sectionSubtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
 /* ==================== CATEGORY FILTER ==================== */

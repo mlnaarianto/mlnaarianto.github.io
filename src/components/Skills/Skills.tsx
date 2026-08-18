@@ -71,9 +71,13 @@ export default function Skills() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Skills</h2>
         <div className={styles.underline} />
+        {/* Tambahan sub-teks penjelasan dari kuliah dan mandiri */}
+        <p className={styles.sectionSubtitle}>
+          A combination of technical expertise honed through academic studies and self-driven continuous learning.
+        </p>
       </div>
 
-      {/* CATEGORY FILTER (Menggunakan button HTML biasa + CSS transition) */}
+      {/* CATEGORY FILTER */}
       <div className={styles.categoryButtons}>
         {skillCategories.map(cat => (
           <button

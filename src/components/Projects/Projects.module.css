@@ -22,8 +22,17 @@
   height: 4px;
   width: 80px;
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
   border-radius: 2px;
+}
+
+.sectionSubtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
 /* ==================== PROJECTS SECTION ==================== */
@@ -303,13 +312,11 @@
     grid-template-columns: 1fr;
   }
 
-  /* Matikan efek blur di HP agar render kartu projects jauh lebih ringan */
   .projectCard {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 
-  /* Tampilkan tombol navigasi carousel secara permanen di HP karena tidak ada hover mouse */
   .imageNavBtn {
     opacity: 0.8;
   }

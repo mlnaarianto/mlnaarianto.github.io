@@ -121,6 +121,10 @@ export default function Blog() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Blog</h2>
         <div className={styles.underline} />
+        {/* Tambahan sub-teks penjelasan dari kuliah dan mandiri */}
+        <p className={styles.sectionSubtitle}>
+          Articles and technical write-ups covering insights from my academic journey and self-directed exploration.
+        </p>
       </div>
 
       {/* ===== FILTER ===== */}

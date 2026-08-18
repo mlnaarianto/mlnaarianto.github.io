@@ -27,8 +27,17 @@
     var(--primary-color),
     var(--secondary-color)
   );
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
   border-radius: 2px;
+}
+
+.sectionSubtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
 /* ==================== COLUMNS ==================== */
@@ -175,12 +184,10 @@
 
   .card {
     padding: 22px;
-    /* Matikan efek blur di HP agar render kartu jadi ringan */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 
-  /* ===== BADGE FIX MOBILE ===== */
   .badge {
     position: static;
     display: inline-block;

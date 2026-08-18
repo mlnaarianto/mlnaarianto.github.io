@@ -83,6 +83,10 @@ export default function Experience() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Experience & Certificates</h2>
         <div className={styles.underline} />
+        {/* Tambahan sub-teks di bawah judul section */}
+        <p className={styles.sectionSubtitle}>
+          My professional work history, development milestones, and earned credentials.
+        </p>
       </div>
 
       <div className={styles.columns}>
