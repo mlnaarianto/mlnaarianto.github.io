@@ -80,12 +80,12 @@ export default function Footer() {
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
               <FaEnvelope />
-              <span>maulanaarianto321@gmail.com</span>
+              <span>maulanaarianto592@gmail.com</span>
             </div>
 
             <div className={styles.contactItem}>
               <FaPhone />
-              <span>+62 xxxxxxxxxx</span>
+              <span>+62 895385178108</span>
             </div>
 
             <div className={styles.contactItem}>

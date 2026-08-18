@@ -70,17 +70,28 @@
   border-color: var(--primary-color);
 }
 
+/* ==================== PROJECT IMAGE ==================== */
 .projectImage {
   position: relative;
-  height: 200px;
+  height: 220px; /* Ditinggikan sedikit dari 200px agar tampilan web lebih lega */
   overflow: hidden;
+  background: var(--bg-color); /* Memberikan warna background senada di area kosong */
+  border-bottom: 1px solid var(--border-color); /* Garis batas yang rapi */
 }
 
 .projectImage img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* Diubah ke contain agar semua sisi gambar (web & mobile) utuh dan tidak terpotong */
+  object-fit: contain; 
+  background: rgba(0, 0, 0, 0.03); /* Background samar agar tidak terlihat terlalu kosong */
   transition: var(--transition);
+}
+
+/* Tetap dipertahankan untuk variasi jika dibutuhkan */
+.projectImageContain img {
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .projectOverlay {
@@ -95,14 +106,20 @@
   justify-content: center;
   opacity: 0;
   transition: var(--transition);
+  z-index: 10;
 }
 
 .projectCard:hover .projectOverlay {
   opacity: 1;
 }
 
+/* Efek hover scale diperkecil menjadi 1.05 agar gambar web tidak kepotong berlebihan saat di-hover */
 .projectCard:hover .projectImage img {
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.projectImageContain:hover img {
+  transform: none;
 }
 
 .projectLinks {
@@ -157,9 +174,142 @@
   color: var(--primary-color);
 }
 
+/* ==================== PAGINATION ==================== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.pageNumber {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.pageNumber:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.pageActive {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.pageActive:hover {
+  color: white;
+}
+
+.pageArrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.pageArrow:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.pageArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .projectsGrid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==================== IMAGE CAROUSEL ==================== */
+.projectImage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.imageNavBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 20;
+}
+
+.projectImage:hover .imageNavBtn {
+  opacity: 1;
+}
+
+.imageNavBtn:hover {
+  background: var(--primary-color);
+}
+
+.imageNavLeft {
+  left: 10px;
+}
+
+.imageNavRight {
+  right: 10px;
+}
+
+.imageDots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+}
+
+.imageDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.imageDot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.imageDotActive {
+  background: white;
+  width: 20px;
+  border-radius: 4px;
 }

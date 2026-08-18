@@ -7,7 +7,7 @@
 }
 
 .sectionHeader {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
@@ -30,16 +30,72 @@
   border-radius: 2px;
 }
 
-/* ==================== SKILLS ==================== */
+/* ==================== CATEGORY FILTER ==================== */
+.categoryButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.categoryBtn {
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.categoryBtn.active,
+.categoryBtn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* ==================== SKILLS CONTAINER ==================== */
 .skillsContainer {
   max-width: 900px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.categoryTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 14px;
+}
+
+.categoryTitle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
 }
 
 .skillsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 25px;
 }
 
 /* ==================== SKILL CARD ==================== */
@@ -48,7 +104,7 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  padding: 25px;
+  padding: 22px 25px;
   backdrop-filter: blur(4px);
   overflow: hidden;
 
@@ -58,7 +114,6 @@
     box-shadow 0.3s ease;
 }
 
-/* hover effect (clean) */
 .skillCard:hover {
   transform: translateY(-6px);
   border-color: var(--primary-color);
@@ -72,7 +127,7 @@
   margin-bottom: 15px;
 }
 
-.skillHeader h3 {
+.skillHeader h4 {
   font-weight: 600;
   color: var(--text-color);
 }
@@ -98,7 +153,6 @@
   transition: filter 0.3s ease;
 }
 
-/* bar reacts on hover */
 .skillCard:hover .skillBar {
   filter: brightness(1.15);
 }
@@ -111,5 +165,14 @@
 
   .section {
     padding: 70px 16px;
+  }
+
+  .categoryButtons {
+    gap: 10px;
+  }
+
+  .categoryBtn {
+    padding: 6px 14px;
+    font-size: 0.85rem;
   }
 }

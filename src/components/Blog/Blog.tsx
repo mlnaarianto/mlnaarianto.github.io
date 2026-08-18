@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FaCalendarAlt, FaTag, FaArrowRight } from 'react-icons/fa'
+import { FaCalendarAlt, FaTag, FaArrowRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import styles from './Blog.module.css'
 
 const blogPosts = [
@@ -13,27 +13,27 @@ const blogPosts = [
     excerpt: 'My first experience learning native PHP, understanding basic syntax, CRUD operations, and how PHP connects with MySQL in simple web applications.',
     date: '2026-02-10',
     category: 'Backend',
-    image: 'https://picsum.photos/seed/php/600/400.jpg',
+    image: 'https://www.php.net/images/logos/new-php-logo.svg',
     readTime: '4 min read'
   },
   {
     id: 2,
-    title: 'Understanding RESTful API in Web Development',
-    slug: 'understanding-restful-api',
-    excerpt: 'An introduction to RESTful API concepts, HTTP methods, and how frontend and backend communicate using JSON data.',
+    title: 'Building a REST API with Laravel Sanctum & RBAC',
+    slug: 'building-rest-api-laravel-sanctum',
+    excerpt: 'How I built a token-based REST API in Laravel using Sanctum for authentication and a custom RBAC middleware to restrict access by user role.',
     date: '2026-02-10',
-    category: 'Backend',
-    image: 'https://picsum.photos/seed/restapi/600/400.jpg',
-    readTime: '6 min read'
+    category: 'Laravel',
+    image: 'https://raw.githubusercontent.com/laravel/art/master/laravel-logo.svg',
+    readTime: '7 min read'
   },
   {
     id: 3,
-    title: 'Building Dynamic Websites with Laravel Blade',
-    slug: 'building-dynamic-websites-laravel-blade',
-    excerpt: 'Learn how Laravel Blade templating engine helps build clean, reusable, and dynamic web interfaces efficiently.',
+    title: 'Building a REST API Backend with Go and Gin Framework',
+    slug: 'building-rest-api-go-gin',
+    excerpt: 'How I built a structured backend using Go and the Gin framework, covering routing, middlewares, RBAC authorization, and clean project architecture.',
     date: '2026-02-10',
-    category: 'Laravel',
-    image: 'https://picsum.photos/seed/laravelblade/600/400.jpg',
+    category: 'Golang',
+    image: 'https://raw.githubusercontent.com/gin-gonic/logo/master/color.png',
     readTime: '8 min read'
   },
   {
@@ -43,7 +43,7 @@ const blogPosts = [
     excerpt: 'Learn how OAuth works and how to integrate social login services like Google, Meta, X, and Discord into your web application.',
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://picsum.photos/seed/oauth/600/400.jpg',
+    image: 'https://unpkg.com/lucide-static@latest/icons/key-round.svg',
     readTime: '9 min read'
   },
   {
@@ -53,10 +53,9 @@ const blogPosts = [
     excerpt: 'Learn how I built an anime face generator using Deep Convolutional GAN (DCGAN) with TensorFlow and Keras, from dataset preparation to model training.',
     date: '2026-02-10',
     category: 'AI / Machine Learning',
-    image: 'https://picsum.photos/seed/animegan/600/400.jpg',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg',
     readTime: '12 min read'
   },
-
   {
     id: 6,
     title: 'Getting Started with CodeIgniter 4 for Web Development',
@@ -64,15 +63,27 @@ const blogPosts = [
     excerpt: 'A beginner-friendly introduction to CodeIgniter 4, covering MVC structure, routing, controllers, and simple CRUD implementation.',
     date: '2026-02-10',
     category: 'PHP',
-    image: 'https://picsum.photos/seed/codeigniter4/600/400.jpg',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg',
     readTime: '8 min read'
+  },
+  {
+    id: 7,
+    title: 'Understanding Ruby on Rails: Convention over Configuration',
+    slug: 'getting-started-ruby-on-rails',
+    excerpt: 'An introduction to Ruby on Rails, exploring its core principles like Convention over Configuration, Active Record ORM, MVC pattern, and rapid web development.',
+    date: '2026-02-10',
+    category: 'Ruby on Rails',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rails/rails-original-wordmark.svg',
+    readTime: '7 min read'
   }
-
 ]
+
+const itemsPerPage = 3
 
 export default function Blog() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
   const [filter, setFilter] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1)
 
   const categories = ['all', ...new Set(blogPosts.map(post => post.category))]
 
@@ -80,6 +91,23 @@ export default function Blog() {
     filter === 'all'
       ? blogPosts
       : blogPosts.filter(post => post.category === filter)
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / itemsPerPage))
+
+  const paginatedPosts = filteredPosts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filter])
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return
+    setCurrentPage(page)
+    document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -127,8 +155,7 @@ export default function Blog() {
         {categories.map(category => (
           <motion.button
             key={category}
-            className={`${styles.filterBtn} ${filter === category ? styles.active : ''
-              }`}
+            className={`${styles.filterBtn} ${filter === category ? styles.active : ''}`}
             onClick={() => setFilter(category)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -140,7 +167,7 @@ export default function Blog() {
 
       {/* ===== BLOG GRID ===== */}
       <div className={styles.blogGrid}>
-        {filteredPosts.map((post, index) => (
+        {paginatedPosts.map((post, index) => (
           <motion.div
             key={post.id}
             className={styles.blogCard}
@@ -196,6 +223,44 @@ export default function Blog() {
           transition={{ duration: 0.6 }}
         >
           <p>No posts found in this category.</p>
+        </motion.div>
+      )}
+
+      {/* ===== PAGINATION ===== */}
+      {totalPages > 1 && (
+        <motion.div
+          className={styles.pagination}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <button
+            className={styles.pageArrow}
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label="Previous page"
+          >
+            <FaChevronLeft />
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <button
+              key={page}
+              className={`${styles.pageNumber} ${currentPage === page ? styles.pageActive : ''}`}
+              onClick={() => goToPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            className={styles.pageArrow}
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label="Next page"
+          >
+            <FaChevronRight />
+          </button>
         </motion.div>
       )}
     </motion.section>

@@ -16,7 +16,6 @@ type BlogPost = {
 }
 
 const blogPosts: BlogPost[] = [
-  //php native
   {
     id: 1,
     title: 'Getting Started with Native PHP for Beginners',
@@ -76,144 +75,281 @@ It improves understanding of server logic, data processing, and database interac
 `,
     date: '2026-02-10',
     category: 'Backend',
-    image: 'https://picsum.photos/seed/phpnative/1200/600.jpg',
+    image: 'https://www.php.net/images/logos/new-php-logo.svg',
     readTime: '4 min read'
   },
-
-
-  //restful api
   {
     id: 2,
-    title: 'Understanding RESTful API in Web Development',
-    slug: 'understanding-restful-api',
+    title: 'Building a REST API with Laravel Sanctum & RBAC',
+    slug: 'building-rest-api-laravel-sanctum',
     content: `
 ## Introduction
 
-A **RESTful API** (Representational State Transfer) is a standard way for applications to communicate with each other using **HTTP requests** and **JSON data**.
+**Laravel Sanctum** provides a simple, token-based authentication system for SPAs, mobile apps, and simple token-based APIs. In this project, I used Sanctum to secure a REST API and added a custom **RBAC (Role-Based Access Control)** middleware to restrict endpoints based on user roles.
 
-REST APIs are commonly used to connect **frontend** and **backend** systems in modern web development.
+Unlike Passport, Sanctum doesn't require OAuth2 complexity, making it a lightweight choice for internal or first-party APIs.
 
-### HTTP Methods
+---
 
-Some common HTTP methods used in RESTful APIs:
+## Why Sanctum?
 
-- **GET** → Retrieve data
-- **POST** → Create new data
-- **PUT** → Update existing data
-- **DELETE** → Remove data
+- Lightweight, no OAuth2 server needed
+- Simple personal access tokens
+- Works great for SPA and mobile API auth
+- Easy to combine with custom middleware like RBAC
 
-### Simple PHP API Example
+---
 
-\`\`\`php
-<?php
-header("Content-Type: application/json");
+## Installing Sanctum
 
-$data = [
-  "status" => "success",
-  "message" => "Hello from REST API"
-];
-
-echo json_encode($data);
-?>
+\`\`\`bash
+composer require laravel/sanctum
+php artisan vendor:publish --provider="Laravel\\Sanctum\\SanctumServiceProvider"
+php artisan migrate
 \`\`\`
 
-### Example JSON Response
+Then add the \`HasApiTokens\` trait to the \`User\` model:
 
-\`\`\`json
+\`\`\`php
+use Laravel\\Sanctum\\HasApiTokens;
+
+class User extends Authenticatable
 {
-  "status": "success",
-  "message": "Hello from REST API"
+    use HasApiTokens, HasFactory, Notifiable;
 }
 \`\`\`
 
-### Conclusion
+---
 
-RESTful APIs make web applications more **scalable**, **structured**, and **easy to integrate** across multiple platforms such as web, mobile, and IoT devices.
+## Defining Routes in api.php
+
+All API routes live in \`routes/api.php\` and are automatically prefixed with \`/api\`:
+
+\`\`\`php
+use App\\Http\\Controllers\\AuthController;
+use App\\Http\\Controllers\\UserController;
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/users', [UserController::class, 'index']);
+    });
+});
+\`\`\`
+
+---
+
+## Login & Token Generation
+
+\`\`\`php
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+
+    $token = $user->createToken('api-token')->plainTextToken;
+
+    return response()->json([
+        'user' => $user,
+        'token' => $token,
+    ]);
+}
+\`\`\`
+
+---
+
+## Custom RBAC Middleware
+
+To restrict routes by role, I created a simple middleware:
+
+\`\`\`php
+class RoleMiddleware
+{
+    public function handle(Request $request, Closure $next, string $role)
+    {
+        if ($request->user()->role !== $role) {
+            return response()->json(['message' => 'Access denied'], 403);
+        }
+
+        return $next($request);
+    }
+}
+\`\`\`
+
+Then register it as an alias in \`bootstrap/app.php\` (or \`Kernel.php\` for older versions):
+
+\`\`\`php
+$middleware->alias([
+    'role' => \\App\\Http\\Middleware\\RoleMiddleware::class,
+]);
+\`\`\`
+
+---
+
+## Protecting a Route by Role
+
+\`\`\`php
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+});
+\`\`\`
+
+If the authenticated user's role doesn't match, the request is rejected with a **403 Forbidden** response before it ever reaches the controller.
+
+---
+
+## Conclusion
+
+Combining **Laravel Sanctum** with a custom **RBAC middleware** gave me a clean, lightweight way to secure API endpoints without the overhead of full OAuth2. It's a solid pattern for internal tools, admin panels, or any first-party API where you control both the frontend and backend.
 `,
     date: '2026-02-10',
-    category: 'Backend',
-    image: 'https://picsum.photos/seed/restapi/1200/600.jpg',
-    readTime: '6 min read'
+    category: 'Laravel',
+    image: 'https://raw.githubusercontent.com/laravel/art/master/laravel-logo.svg',
+    readTime: '7 min read'
   },
-
-
-  //laravel blade
   {
     id: 3,
-    title: 'Building Dynamic Websites with Laravel Blade',
-    slug: 'building-dynamic-websites-laravel-blade',
+    title: 'Building a REST API Backend with Go and Gin Framework',
+    slug: 'building-rest-api-go-gin',
     content: `
 ## Introduction
 
-**Laravel Blade** is a powerful templating engine that comes built-in with the Laravel framework.  
-It allows developers to create **dynamic**, **clean**, and **reusable** user interfaces efficiently.
+**Gin** is a lightweight and high-performance HTTP web framework written in **Go (Golang)**.  
+In this project, I used Gin to build a structured backend service with **role-based access control (RBAC)**, clean architecture, and a clear separation of concerns.
 
-Blade makes it easier to separate **logic** and **presentation**, resulting in more maintainable code.
-
----
-
-## Why Use Blade?
-
-- Clean and readable syntax
-- Layout inheritance
-- Reusable components
-- Secure data rendering
-- Easy integration with Laravel controllers
+Compared to native \`net/http\`, Gin makes routing, middleware handling, and JSON binding much faster and simpler to write.
 
 ---
 
-## Basic Blade Layout Example
+## Why Choose Gin?
 
-### layout.blade.php
+- Extremely fast routing performance
+- Built-in middleware support
+- Simple JSON binding and validation
+- Clean, minimal API design
+- Great fit for building REST APIs and microservices
 
-\`\`\`php
-<!DOCTYPE html>
-<html>
-<head>
-  <title>@yield('title')</title>
-</head>
-<body>
-  <header>
-    <h1>My Website</h1>
-  </header>
+---
 
-  <main>
-    @yield('content')
-  </main>
+## Project Structure
 
-  <footer>
-    <p>© 2026 My Website</p>
-  </footer>
-</body>
-</html>
+A typical Gin backend project can be organized like this:
+
+\`\`\`
+├── config/
+├── controllers/
+├── database/
+├── db/migrations/
+├── helpers/
+├── middlewares/
+├── models/
+├── routes/
+├── go.mod
+├── go.sum
+└── main.go
+\`\`\`
+
+- **config/** → environment and database configuration
+- **controllers/** → request handling logic
+- **middlewares/** → authentication and RBAC checks
+- **models/** → database schema and struct definitions
+- **routes/** → API endpoint definitions
+
+---
+
+## Setting Up the Router
+
+\`\`\`go
+package main
+
+import (
+  "github.com/gin-gonic/gin"
+)
+
+func main() {
+  router := gin.Default()
+
+  router.GET("/health", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+      "status": "ok",
+    })
+  })
+
+  router.Run(":8080")
+}
 \`\`\`
 
 ---
 
-## Child Page Example
+## Middleware for RBAC (Role-Based Access Control)
 
-### home.blade.php
+Middlewares are used to check whether a user has permission to access a certain route:
 
-\`\`\`php
-@extends('layout')
+\`\`\`go
+func RoleMiddleware(allowedRoles ...string) gin.HandlerFunc {
+  return func(c *gin.Context) {
+    userRole := c.GetString("role")
 
-@section('title', 'Home Page')
+    for _, role := range allowedRoles {
+      if role == userRole {
+        c.Next()
+        return
+      }
+    }
 
-@section('content')
-  <h2>Welcome, {{ $name }}</h2>
-  <p>This page is rendered using Laravel Blade.</p>
-@endsection
+    c.AbortWithStatusJSON(403, gin.H{
+      "message": "Access denied",
+    })
+  }
+}
+\`\`\`
+
+This middleware can then be applied to specific routes that require certain roles, such as **admin** or **staff**.
+
+---
+
+## Example Controller
+
+\`\`\`go
+func GetUsers(c *gin.Context) {
+  var users []Model.User
+
+  if err := database.DB.Find(&users).Error; err != nil {
+    c.JSON(500, gin.H{"error": err.Error()})
+    return
+  }
+
+  c.JSON(200, gin.H{
+    "data": users,
+  })
+}
 \`\`\`
 
 ---
 
-## Controller Example
+## Example Route Grouping
 
-\`\`\`php
-public function index() {
-  return view('home', [
-    'name' => 'Maulana'
-  ]);
+\`\`\`go
+api := router.Group("/api")
+{
+  api.POST("/login", controllers.Login)
+
+  admin := api.Group("/admin")
+  admin.Use(middlewares.AuthMiddleware(), middlewares.RoleMiddleware("admin"))
+  {
+    admin.GET("/users", controllers.GetUsers)
+  }
 }
 \`\`\`
 
@@ -221,17 +357,14 @@ public function index() {
 
 ## Conclusion
 
-Laravel Blade helps developers build **structured**, **scalable**, and **maintainable** web applications.  
-By using layouts and components, development becomes faster while keeping the code organized and secure.
+Building a backend with **Go and Gin** taught me a lot about clean project architecture, middleware design, and implementing **RBAC-based authorization**.  
+Gin's speed and simplicity make it a great choice for building scalable REST APIs, especially for projects that require strict access control between different user roles.
 `,
     date: '2026-02-10',
-    category: 'Laravel',
-    image: 'https://picsum.photos/seed/laravelblade/1200/600.jpg',
+    category: 'Golang',
+    image: 'https://raw.githubusercontent.com/gin-gonic/logo/master/color.png',
     readTime: '8 min read'
   },
-
-
-  //oauth 
   {
     id: 4,
     title: 'Implementing OAuth Social Login (Google, Meta, X, Discord)',
@@ -316,12 +449,9 @@ It provides a **secure**, **fast**, and **user-friendly authentication experienc
 `,
     date: '2026-02-10',
     category: 'Authentication',
-    image: 'https://picsum.photos/seed/oauth/1200/600.jpg',
+    image: 'https://unpkg.com/lucide-static@latest/icons/key-round.svg',
     readTime: '9 min read'
   },
-
-
-  //ai dcgan
   {
     id: 5,
     title: 'Generating Anime Characters using DCGAN with TensorFlow & Keras',
@@ -416,10 +546,9 @@ It was a challenging but rewarding experience that strengthened my skills in **M
 `,
     date: '2026-02-10',
     category: 'AI / Machine Learning',
-    image: 'https://picsum.photos/seed/animegan/1200/600.jpg',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg',
     readTime: '12 min read'
   },
-
   {
     id: 6,
     title: 'Getting Started with CodeIgniter 4 for Web Development',
@@ -464,7 +593,7 @@ $routes->get('/users', 'UserController::index');
 ## Controller Example
 
 \`\`\`php
-namespace App\Controllers;
+namespace App\\Controllers;
 
 class UserController extends BaseController
 {
@@ -505,21 +634,142 @@ It is a great framework for developers who want speed, simplicity, and performan
 `,
     date: '2026-02-10',
     category: 'PHP',
-    image: 'https://picsum.photos/seed/codeigniter4/1200/600.jpg',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg',
     readTime: '8 min read'
+  },
+  {
+    id: 7,
+    title: 'Understanding Ruby on Rails: Convention over Configuration',
+    slug: 'getting-started-ruby-on-rails',
+    content: `
+## Introduction
+
+**Ruby on Rails (RoR)** is a full-stack web application framework written in **Ruby**.  
+It is built around two fundamental philosophies: **Convention over Configuration (CoC)** and **Don't Repeat Yourself (DRY)**, which allow developers to write clean, maintainable code with minimal setup overhead.
+
+---
+
+## Core Principles of Rails
+
+1. **Convention over Configuration (CoC)**  
+   Rails assumes sensible defaults so you don't have to write endless config files. If you name a model \`User\`, Rails automatically assumes the database table is named \`users\`.
+
+2. **Don't Repeat Yourself (DRY)**  
+   Every piece of code or logic should have a single, unambiguous representation within the system, avoiding redundant code across controllers and models.
+
+---
+
+## Project Structure & MVC Architecture
+
+A standard Rails application organizes files cleanly:
+
+- **app/models/** → Data models & business logic powered by Active Record
+- **app/views/** → UI templates rendered via ERB (Embedded Ruby)
+- **app/controllers/** → Handles incoming HTTP requests and responses
+- **config/routes.rb** → Defines application routing rules
+
+---
+
+## RESTful Routing Example
+
+In Rails, defining RESTful resources takes just one line in \`config/routes.rb\`:
+
+\`\`\`ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  resources :users
+end
+\`\`\`
+
+This automatically generates 7 standard RESTful routes (\`index\`, \`show\`, \`new\`, \`create\`, \`edit\`, \`update\`, \`destroy\`).
+
+---
+
+## Model & Active Record ORM
+
+Active Record makes database queries intuitive without writing raw SQL:
+
+\`\`\`ruby
+# app/models/user.rb
+class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+  
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+end
+\`\`\`
+
+Querying the database is simple:
+
+\`\`\`ruby
+# Fetch active users
+users = User.where(active: true)
+
+# Create a new user record
+user = User.create(name: "Maulana", email: "maulana@example.com")
+\`\`\`
+
+---
+
+## Controller Example
+
+\`\`\`ruby
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  def index
+    @users = User.all
+  end
+
+  def show
+    @user = User.find(params[:id])
+  end
+end
+\`\`\`
+
+---
+
+## View Example (ERB)
+
+\`\`\`erb
+<!-- app/views/users/index.html.erb -->
+<h1>User List</h1>
+
+<ul>
+  <% @users.each do |user| %>
+    <li><%= user.name %> - <%= user.email %></li>
+  <% end %>
+</ul>
+\`\`\`
+
+---
+
+## Rapid Development with Scaffolding
+
+Rails provides CLI generators that boost productivity. Generating a full CRUD resource requires a single command:
+
+\`\`\`bash
+bin/rails generate scaffold Post title:string body:text
+bin/rails db:migrate
+\`\`\`
+
+This command automatically generates the model, migration file, controller, views, routes, and test suite.
+
+---
+
+## Conclusion
+
+Exploring **Ruby on Rails** offers a refreshing perspective on backend development. Its strong conventions reduce decision fatigue, while Active Record makes complex database operations effortless. It remains a powerful framework for rapidly turning ideas into production-ready web applications.
+`,
+    date: '2026-02-10',
+    category: 'Ruby on Rails',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rails/rails-original-wordmark.svg',
+    readTime: '7 min read'
   }
-
-
-
-
-
-
-
 ]
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const navigate = useNavigate() // Digunakan untuk kembali ke history sebelumnya
+  const navigate = useNavigate()
 
   const post = blogPosts.find(p => p.slug === slug)
 
@@ -527,7 +777,6 @@ export default function BlogDetail() {
     return (
       <div className={styles.notFound}>
         <h2>Article not found</h2>
-        {/* Tombol back darurat jika post tidak ada */}
         <button onClick={() => navigate(-1)} className={styles.backLink} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
           <FaArrowLeft /> Back
         </button>
@@ -547,11 +796,6 @@ export default function BlogDetail() {
   return (
     <section className={styles.detailSection}>
       <div className={styles.container}>
-
-        {/* Diubah dari <Link> ke <button> agar bisa navigate(-1).
-          className tetap menggunakan styles.backLink agar tampilan sama persis.
-          Ditambah sedikit style reset agar button tidak punya border/background default browser.
-        */}
         <button
           onClick={() => navigate(-1)}
           className={styles.backLink}

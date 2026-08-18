@@ -96,12 +96,13 @@ h1 {
 
 .heroImage {
   width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
+  height: 300px;
+  object-fit: contain;
+  background: var(--bg-secondary);
   border-radius: 12px;
   margin-bottom: 40px;
   box-shadow: var(--shadow-lg);
+  padding: 40px;
 }
 
 .content {

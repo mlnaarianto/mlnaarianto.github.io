@@ -40,7 +40,17 @@ const data: ExperienceItem[] = [
       "Developed mobile applications using Flutter, implemented responsive layouts, integrated REST APIs, and optimized application performance for better user experience.",
     type: "experience",
   },
-
+  {
+    title: "Fullstack Developer Associate (FSDA) Certificate",
+    company: "Logical Operations - CertNexus",
+    companyUrl: "https://certifications.certnexus.com",
+    certificateUrl:
+      "https://certifications.certnexus.com/1b97fc17-6977-44fc-ad98-7adfc3838c85",
+    date: "Jul 2026",
+    description:
+      "Earned the Fullstack Developer Associate (FSDA) certification from Logical Operations, validating proficiency in fullstack web development covering frontend, backend, database, and API integration best practices.",
+    type: "certificate",
+  },
   {
     title: "Hack4ID Kepri Participant Certificate",
     company: "Politeknik Negeri Batam x Lintasarta",
@@ -62,7 +72,7 @@ const data: ExperienceItem[] = [
     description:
       'Completed a Project Based Learning program with the project titled "Parkwell: Data Driven Smart Parking System Powered by IoT and Big Data Analytics". Responsible for developing the web dashboard using Laravel, integrating IoT sensor data, and implementing real-time monitoring and analytics features.',
     type: "certificate",
-  }
+  },
 ];
 
 export default function Experience() {
