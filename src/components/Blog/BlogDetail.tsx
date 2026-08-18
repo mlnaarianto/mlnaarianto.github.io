@@ -652,10 +652,10 @@ It is built around two fundamental philosophies: **Convention over Configuration
 ## Core Principles of Rails
 
 1. **Convention over Configuration (CoC)**  
-   Rails assumes sensible defaults so you don't have to write endless config files. If you name a model \`User\`, Rails automatically assumes the database table is named \`users\`.
+    Rails assumes sensible defaults so you don't have to write endless config files. If you name a model \`User\`, Rails automatically assumes the database table is named \`users\`.
 
 2. **Don't Repeat Yourself (DRY)**  
-   Every piece of code or logic should have a single, unambiguous representation within the system, avoiding redundant code across controllers and models.
+    Every piece of code or logic should have a single, unambiguous representation within the system, avoiding redundant code across controllers and models.
 
 ---
 
@@ -802,7 +802,7 @@ export default function BlogDetail() {
           style={{
             border: 'none',
             background: 'none',
-            padding: 0,
+            padding: '8px 16px',
             fontFamily: 'inherit',
             cursor: 'pointer',
             display: 'flex',

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import styles from './Skills.module.css'
@@ -60,110 +59,62 @@ const skillCategories: SkillCategory[] = [
 export default function Skills() {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.2
+    threshold: 0.1
   })
 
   const [activeCategory, setActiveCategory] = useState(skillCategories[0].id)
-
   const filteredCategories = skillCategories.filter(cat => cat.id === activeCategory)
 
   return (
-    <motion.section
-      ref={ref}
-      id="skills"
-      className={`${styles.section} skills-section`}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
+    <section ref={ref} id="skills" className={`${styles.section} skills-section`}>
       {/* HEADER */}
       <div className={styles.sectionHeader}>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Skills
-        </motion.h2>
-
-        <motion.div
-          className={styles.underline}
-          initial={{ width: 0 }}
-          animate={inView ? { width: '80px' } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        />
+        <h2 className={styles.sectionTitle}>Skills</h2>
+        <div className={styles.underline} />
       </div>
 
-      {/* CATEGORY FILTER */}
-      <motion.div
-        className={styles.categoryButtons}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+      {/* CATEGORY FILTER (Menggunakan button HTML biasa + CSS transition) */}
+      <div className={styles.categoryButtons}>
         {skillCategories.map(cat => (
-          <motion.button
+          <button
             key={cat.id}
             className={`${styles.categoryBtn} ${activeCategory === cat.id ? styles.active : ''}`}
             onClick={() => setActiveCategory(cat.id)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             {cat.label}
-          </motion.button>
+          </button>
         ))}
-      </motion.div>
+      </div>
 
       {/* SKILLS BY CATEGORY */}
       <div className={styles.skillsContainer}>
-        {filteredCategories.map((category, catIndex) => (
+        {filteredCategories.map((category) => (
           <div key={category.id} className={styles.categoryBlock}>
-            <motion.h3
-              className={styles.categoryTitle}
-              initial={{ opacity: 0, x: -15 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * catIndex }}
-            >
-              {category.label}
-            </motion.h3>
+            <h3 className={styles.categoryTitle}>{category.label}</h3>
 
             <div className={styles.skillsGrid}>
-              {category.skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  className={styles.skillCard}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 * index }}
-                  whileHover={{ y: -5 }}
-                >
+              {category.skills.map((skill) => (
+                <div key={skill.name} className={styles.skillCard}>
                   <div className={styles.skillHeader}>
                     <h4>{skill.name}</h4>
                     <span>{skill.level}%</span>
                   </div>
 
                   <div className={styles.skillBarContainer}>
-                    <motion.div
+                    <div
                       className={styles.skillBar}
                       style={{
                         backgroundColor: skill.color,
-                        transformOrigin: 'left'
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={inView ? { scaleX: skill.level / 100 } : {}}
-                      transition={{
-                        duration: 1,
-                        delay: 0.2 + 0.1 * index,
-                        ease: 'easeOut'
+                        width: inView ? `${skill.level}%` : '0%'
                       }}
                     />
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   )
 }

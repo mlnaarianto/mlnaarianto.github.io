@@ -105,9 +105,9 @@
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
   border: none;
   font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .primaryBtn {
@@ -131,6 +131,11 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 
+.primaryBtn:active,
+.secondaryBtn:active {
+  transform: scale(0.95);
+}
+
 /* ==================== IMAGE ==================== */
 .heroImage {
   max-width: 40%;
@@ -147,7 +152,7 @@
   border: 4px solid var(--primary-color);
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
 
-  /* transform vertical only */
+  /* Animasi melayang (hanya aktif di layar besar/laptop) */
   animation: float 6s ease-in-out infinite;
   will-change: transform;
 }
@@ -170,7 +175,6 @@
   bottom: 24px;
   left: 50%;
 
-  /* translate3d = GPU + no overflow */
   transform: translate3d(-50%, 0, 0);
 
   color: var(--text-secondary);
@@ -238,6 +242,8 @@
   .profileImage {
     width: 160px;
     height: 160px;
+    /* MEMATIKAN animasi float di HP agar tidak berat/lag */
+    animation: none; 
   }
 
   .scrollIndicator {

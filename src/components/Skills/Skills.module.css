@@ -11,7 +11,7 @@
   text-align: center;
 }
 
-.sectionHeader h2 {
+.sectionTitle {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
@@ -47,7 +47,7 @@
   border-radius: 30px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .categoryBtn.active,
@@ -55,6 +55,10 @@
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
+}
+
+.categoryBtn:active {
+  transform: scale(0.95);
 }
 
 /* ==================== SKILLS CONTAINER ==================== */
@@ -106,16 +110,14 @@
   border-radius: 14px;
   padding: 22px 25px;
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   overflow: hidden;
 
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .skillCard:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   border-color: var(--primary-color);
 }
 
@@ -148,13 +150,8 @@
 .skillBar {
   height: 100%;
   border-radius: 4px;
-  transform-origin: left;
-  will-change: transform;
-  transition: filter 0.3s ease;
-}
-
-.skillCard:hover .skillBar {
-  filter: brightness(1.15);
+  /* Animasi mulus menggunakan CSS transition pada width */
+  transition: width 1s cubic-bezier(0.1, 0.8, 0.3, 1);
 }
 
 /* ==================== RESPONSIVE ==================== */
@@ -174,5 +171,11 @@
   .categoryBtn {
     padding: 6px 14px;
     font-size: 0.85rem;
+  }
+
+  /* Matikan efek blur di HP agar performa render kartu skill jadi ringan */
+  .skillCard {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

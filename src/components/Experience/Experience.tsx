@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import styles from "./Experience.module.css";
 
@@ -78,37 +77,18 @@ const data: ExperienceItem[] = [
 export default function Experience() {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.15,
+    threshold: 0.1,
   });
 
   const experiences = data.filter((item) => item.type === "experience");
   const certificates = data.filter((item) => item.type === "certificate");
 
   return (
-    <motion.section
-      ref={ref}
-      id="experience"
-      className={styles.section}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
+    <section ref={ref} id="experience" className={styles.section}>
       {/* HEADER */}
       <div className={styles.sectionHeader}>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Experience & Certificates
-        </motion.h2>
-
-        <motion.div
-          className={styles.underline}
-          initial={{ width: 0 }}
-          animate={inView ? { width: "80px" } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        />
+        <h2 className={styles.sectionTitle}>Experience & Certificates</h2>
+        <div className={styles.underline} />
       </div>
 
       <div className={styles.columns}>
@@ -117,14 +97,7 @@ export default function Experience() {
           <h3 className={styles.columnTitle}>Experience</h3>
           <div className={styles.grid}>
             {experiences.map((item, index) => (
-              <motion.div
-                key={index}
-                className={styles.card}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-                whileHover={{ y: -8 }}
-              >
+              <div key={index} className={styles.card}>
                 <span className={`${styles.badge} ${styles.experience}`}>
                   Experience
                 </span>
@@ -148,7 +121,7 @@ export default function Experience() {
 
                 <p className={styles.date}>{item.date}</p>
                 <p className={styles.description}>{item.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -158,17 +131,7 @@ export default function Experience() {
           <h3 className={styles.columnTitle}>Certificates</h3>
           <div className={styles.grid}>
             {certificates.map((item, index) => (
-              <motion.div
-                key={index}
-                className={styles.card}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.1 * index + 0.2,
-                }}
-                whileHover={{ y: -8 }}
-              >
+              <div key={index} className={styles.card}>
                 <span className={`${styles.badge} ${styles.certificate}`}>
                   Certificate
                 </span>
@@ -203,11 +166,11 @@ export default function Experience() {
                     View Certificate
                   </a>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

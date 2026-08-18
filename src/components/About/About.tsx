@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
 import styles from './About.module.css'
 
 export default function About() {
@@ -20,45 +19,19 @@ export default function About() {
         return () => clearInterval(interval)
       }, 300)
 
-      return () => {
-        clearTimeout(expTimer)
-      }
+      return () => clearTimeout(expTimer)
     }
   }, [inView])
 
   return (
-    <motion.section
-      ref={ref}
-      id="about"
-      className={`${styles.section} about-section`}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
+    <section ref={ref} id="about" className={`${styles.section} about-section`}>
       <div className={styles.sectionHeader}>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          About Me
-        </motion.h2>
-
-        <motion.div
-          className={styles.underline}
-          initial={{ width: 0 }}
-          animate={inView ? { width: '80px' } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        />
+        <h2 className={styles.sectionTitle}>About Me</h2>
+        <div className={styles.underline} />
       </div>
 
       <div className={styles.aboutContent}>
-        <motion.div
-          className={styles.aboutText}
-          initial={{ opacity: 0, x: -30 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
+        <div className={styles.aboutText}>
           <p>
             I am a <strong>Software Engineering Technology</strong> student at
             <strong> Batam State Polytechnic</strong> who enjoys turning ideas into
@@ -75,16 +48,9 @@ export default function About() {
             I’m highly motivated to keep learning, explore new tools, and grow through
             hands-on projects and collaboration with others.
           </p>
+        </div>
 
-
-        </motion.div>
-
-        <motion.div
-          className={styles.aboutStats}
-          initial={{ opacity: 0, x: 30 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className={styles.aboutStats}>
           <div className={styles.statCard}>
             <h3>{experience}+</h3>
             <p>Years Experience</p>
@@ -99,8 +65,8 @@ export default function About() {
             <h3>100%</h3>
             <p>Commitment to Learning</p>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }

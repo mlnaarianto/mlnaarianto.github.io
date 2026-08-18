@@ -11,7 +11,7 @@
   text-align: center;
 }
 
-.sectionHeader h2 {
+.sectionTitle {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
@@ -20,6 +20,7 @@
 
 .underline {
   height: 4px;
+  width: 80px;
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   margin: 0 auto;
   border-radius: 2px;
@@ -41,7 +42,7 @@
   color: var(--text-secondary);
   border-radius: 30px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .filterBtn.active,
@@ -49,6 +50,10 @@
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
+}
+
+.filterBtn:active {
+  transform: scale(0.95);
 }
 
 .projectsGrid {
@@ -63,32 +68,32 @@
   border-radius: 12px;
   overflow: hidden;
   backdrop-filter: blur(10px);
-  transition: var(--transition);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .projectCard:hover {
   border-color: var(--primary-color);
+  transform: translateY(-6px);
 }
 
 /* ==================== PROJECT IMAGE ==================== */
 .projectImage {
   position: relative;
-  height: 220px; /* Ditinggikan sedikit dari 200px agar tampilan web lebih lega */
+  height: 220px;
   overflow: hidden;
-  background: var(--bg-color); /* Memberikan warna background senada di area kosong */
-  border-bottom: 1px solid var(--border-color); /* Garis batas yang rapi */
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .projectImage img {
   width: 100%;
   height: 100%;
-  /* Diubah ke contain agar semua sisi gambar (web & mobile) utuh dan tidak terpotong */
-  object-fit: contain; 
-  background: rgba(0, 0, 0, 0.03); /* Background samar agar tidak terlihat terlalu kosong */
-  transition: var(--transition);
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.03);
+  transition: opacity 0.3s ease;
 }
 
-/* Tetap dipertahankan untuk variasi jika dibutuhkan */
 .projectImageContain img {
   object-fit: contain;
   background: rgba(0, 0, 0, 0.15);
@@ -105,21 +110,12 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: var(--transition);
+  transition: opacity 0.2s ease;
   z-index: 10;
 }
 
 .projectCard:hover .projectOverlay {
   opacity: 1;
-}
-
-/* Efek hover scale diperkecil menjadi 1.05 agar gambar web tidak kepotong berlebihan saat di-hover */
-.projectCard:hover .projectImage img {
-  transform: scale(1.05);
-}
-
-.projectImageContain:hover img {
-  transform: none;
 }
 
 .projectLinks {
@@ -137,7 +133,7 @@
   justify-content: center;
   color: white;
   font-size: 1.2rem;
-  transition: var(--transition);
+  transition: background 0.2s ease;
 }
 
 .projectLinks a:hover {
@@ -194,7 +190,7 @@
   color: var(--text-color);
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .pageNumber:hover {
@@ -223,7 +219,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .pageArrow:hover:not(:disabled) {
@@ -236,20 +232,7 @@
   cursor: not-allowed;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .projectsGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ==================== IMAGE CAROUSEL ==================== */
-.projectImage img {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .imageNavBtn {
   position: absolute;
   top: 50%;
@@ -265,7 +248,7 @@
   justify-content: center;
   cursor: pointer;
   opacity: 0;
-  transition: var(--transition);
+  transition: opacity 0.2s ease, background 0.2s ease;
   z-index: 20;
 }
 
@@ -301,7 +284,7 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .imageDot:hover {
@@ -312,4 +295,22 @@
   background: white;
   width: 20px;
   border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .projectsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Matikan efek blur di HP agar render kartu projects jauh lebih ringan */
+  .projectCard {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Tampilkan tombol navigasi carousel secara permanen di HP karena tidak ada hover mouse */
+  .imageNavBtn {
+    opacity: 0.8;
+  }
 }

@@ -5,15 +5,14 @@
   width: 100%;
   z-index: 1000;
   padding: 15px 0;
-  transition: var(--transition);
-  backdrop-filter: blur(10px);
+  transition: padding 0.2s ease, background-color 0.2s ease;
   background: var(--nav-bg);
 }
 
 .scrolled {
   padding: 10px 0;
   background: var(--nav-scrolled-bg);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navContainer {
@@ -44,7 +43,7 @@
   color: var(--text-secondary);
   font-weight: 500;
   position: relative;
-  transition: var(--transition);
+  transition: color 0.2s ease;
   background: none;
   border: none;
   cursor: pointer;
@@ -65,7 +64,7 @@
   width: 0;
   height: 2px;
   background: var(--primary-color);
-  transition: var(--transition);
+  transition: width 0.2s ease;
 }
 
 .active::after,
@@ -99,7 +98,7 @@
   background: var(--border-color);
   border-radius: 999px;
   position: relative;
-  transition: var(--transition);
+  transition: background-color 0.2s ease;
 }
 
 .knob {
@@ -110,7 +109,7 @@
   position: absolute;
   top: 2px;
   left: 2px;
-  transition: var(--transition);
+  transition: left 0.2s ease;
 }
 
 .switchOn {
@@ -136,10 +135,10 @@
   width: 24px;
   height: 2px;
   background: var(--text-color);
-  transition: 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* 🔥 STATE: OPEN (JADI X) */
+/* STATE: OPEN (JADI X) */
 .hamburgerOpen span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -151,7 +150,6 @@
 .hamburgerOpen span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
-
 
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
@@ -175,7 +173,7 @@
 
   .mobileOpen {
     display: flex;
-    animation: fadeDown 0.25s ease;
+    animation: fadeDown 0.2s ease;
   }
 
   .themeWrapper {
@@ -183,6 +181,12 @@
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid var(--border-color);
+  }
+
+  /* Matikan backdrop blur di HP agar performa scrolling mulus */
+  .nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
@@ -192,7 +196,6 @@
     opacity: 0;
     transform: translateY(-8px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);

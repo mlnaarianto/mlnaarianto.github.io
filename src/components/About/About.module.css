@@ -11,7 +11,7 @@
   text-align: center;
 }
 
-.sectionHeader h2 {
+.sectionTitle {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 15px;
@@ -19,6 +19,7 @@
 }
 
 .underline {
+  width: 80px;
   height: 4px;
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   margin: 0 auto;
@@ -54,7 +55,8 @@
   padding: 25px 15px;
   text-align: center;
   backdrop-filter: blur(10px);
-  transition: var(--transition);
+  -webkit-backdrop-filter: blur(10px); /* Dukungan Safari/iOS */
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .statCard:hover {
@@ -77,13 +79,20 @@
   font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* ==================== RESPONSIVE DESIGN ==================== */
 @media (max-width: 768px) {
   .aboutContent {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
   .aboutStats {
     grid-template-columns: 1fr;
+  }
+
+  /* Ringankan HP dengan mematikan efek blur yang berat bagi GPU mobile */
+  .statCard {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

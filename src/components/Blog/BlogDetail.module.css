@@ -26,25 +26,6 @@
   color: var(--text-color);
 }
 
-.notFound a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  transition: var(--transition);
-}
-
-.notFound a:hover {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
-}
-
 .backLink {
   display: inline-flex;
   align-items: center;
@@ -53,10 +34,9 @@
   text-decoration: none;
   font-weight: 500;
   margin-bottom: 30px;
-  padding: 8px 16px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .backLink:hover {
@@ -65,7 +45,7 @@
   transform: translateX(-5px);
 }
 
-h1 {
+.title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   line-height: 1.2;
@@ -101,8 +81,9 @@ h1 {
   background: var(--bg-secondary);
   border-radius: 12px;
   margin-bottom: 40px;
-  box-shadow: var(--shadow-lg);
-  padding: 40px;
+  padding: 30px;
+  /* Dihilangkan box-shadow yang terlalu berat agar render HP lebih cepat */
+  box-shadow: none; 
 }
 
 .content {
@@ -149,7 +130,7 @@ h1 {
   background: var(--bg-secondary);
   padding: 2px 6px;
   border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  font-family: monospace;
   font-size: 0.9rem;
   color: var(--accent-color);
 }
@@ -172,7 +153,7 @@ h1 {
   color: var(--primary-color);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .content a:hover {
@@ -216,7 +197,8 @@ h1 {
   }
 
   .heroImage {
-    max-height: 250px;
+    height: 220px;
+    padding: 20px;
   }
 
   .content {
@@ -237,15 +219,11 @@ h1 {
     padding: 80px 15px 30px;
   }
 
-  .notFound h2 {
-    font-size: 1.5rem;
-  }
-
-  h1 {
+  .title {
     font-size: 1.8rem;
   }
 
   .heroImage {
-    max-height: 200px;
+    height: 180px;
   }
 }

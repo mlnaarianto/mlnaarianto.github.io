@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
@@ -40,7 +39,7 @@ export default function Navbar() {
   /* ================= ACTIVE STATE ================= */
   useEffect(() => {
     if (isBlogDetail) {
-      setActive(null) // 🔥 MATIKAN SEMUA GARIS BAWAH
+      setActive(null)
       return
     }
 
@@ -49,11 +48,10 @@ export default function Navbar() {
     }
   }, [location.pathname, isBlogDetail])
 
-
   /* ================= SCROLL + OBSERVER ================= */
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     if (location.pathname !== '/') {
       return () => window.removeEventListener('scroll', handleScroll)
@@ -118,7 +116,6 @@ export default function Navbar() {
     setMenuOpen(false)
     localStorage.setItem('last-section', section)
 
-    // 🔥 JIKA DI BLOG DETAIL → SEMUA MENU PAKAI -1
     if (isBlogDetail) {
       navigate(-1)
       return
@@ -132,14 +129,8 @@ export default function Navbar() {
     navigate('/')
   }
 
-
   return (
-    <motion.nav
-      className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4 }}
-    >
+    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.navContainer}>
         {/* LOGO */}
         <h2
@@ -156,8 +147,9 @@ export default function Navbar() {
         {/* HAMBURGER */}
         <button
           ref={hamburgerRef}
-          className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''
-            }`}
+          className={`${styles.hamburger} ${
+            menuOpen ? styles.hamburgerOpen : ''
+          }`}
           onClick={() => setMenuOpen((p) => !p)}
           aria-label="Toggle menu"
         >
@@ -169,22 +161,24 @@ export default function Navbar() {
         {/* NAV LINKS */}
         <div
           ref={menuRef}
-          className={`${styles.navLinks} ${menuOpen ? styles.mobileOpen : ''
-            }`}
+          className={`${styles.navLinks} ${
+            menuOpen ? styles.mobileOpen : ''
+          }`}
         >
           {/* SECTION MENU */}
           {SECTIONS.map((section) => (
             <button
               key={section}
-              className={`${styles.navLink} ${active === section ? styles.active : ''
-                }`}
+              className={`${styles.navLink} ${
+                active === section ? styles.active : ''
+              }`}
               onClick={() => handleNavClick(section)}
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
             </button>
           ))}
 
-          {/* BLOG DETAIL — KHUSUS SLUG AKTIF */}
+          {/* BLOG DETAIL */}
           {isBlogDetail && (
             <button
               className={`${styles.navLink} ${styles.active}`}
@@ -201,8 +195,9 @@ export default function Navbar() {
                 Light
               </span>
               <div
-                className={`${styles.switch} ${theme === 'dark' ? styles.switchOn : ''
-                  }`}
+                className={`${styles.switch} ${
+                  theme === 'dark' ? styles.switchOn : ''
+                }`}
               >
                 <div className={styles.knob} />
               </div>
@@ -213,6 +208,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   )
 }

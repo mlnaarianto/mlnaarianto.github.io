@@ -60,7 +60,7 @@
   border-radius: 8px;
   color: var(--text-color);
   font-family: inherit;
-  transition: var(--transition);
+  transition: border-color 0.2s ease;
 }
 
 .formGroup input:focus,
@@ -74,16 +74,25 @@
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
   border: none;
   font-size: 1rem;
   background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
   color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
-.primaryBtn:hover {
+.primaryBtn:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.primaryBtn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .footerBottom {
@@ -111,18 +120,20 @@
   justify-content: center;
   color: var(--text-secondary);
   font-size: 1.2rem;
-  transition: var(--transition);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .socialLinks a:hover {
   background: var(--primary-color);
   color: white;
+  transform: translateY(-2px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .footerContent {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
   .footerBottom {

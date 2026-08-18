@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
   FaEnvelope,
@@ -67,13 +66,7 @@ export default function Footer() {
     <footer id="contact" className={styles.footer}>
       <div className={styles.footerContent}>
         {/* LEFT */}
-        <motion.div
-          className={styles.footerInfo}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        <div className={styles.footerInfo}>
           <h2>Get In Touch</h2>
           <p>Feel free to reach out to me for any questions or opportunities.</p>
 
@@ -90,19 +83,13 @@ export default function Footer() {
 
             <div className={styles.contactItem}>
               <FaMapMarkerAlt />
-              <span>Batam City, Riau Island Province, Indonesian</span>
+              <span>Batam City, Riau Island Province, Indonesia</span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* RIGHT */}
-        <motion.div
-          className={styles.footerForm}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
+        <div className={styles.footerForm}>
           <form ref={formRef} onSubmit={handleSubmit}>
             {/* HONEYPOT */}
             <input
@@ -140,29 +127,21 @@ export default function Footer() {
               />
             </div>
 
-            <motion.button
+            <button
               type="submit"
               className={styles.primaryBtn}
               disabled={loading}
-              whileHover={!loading ? { scale: 1.05 } : {}}
-              whileTap={!loading ? { scale: 0.95 } : {}}
             >
               {loading ? 'Sending...' : 'Send Message'}
-            </motion.button>
+            </button>
           </form>
-        </motion.div>
+        </div>
       </div>
 
       {/* BOTTOM */}
-      <motion.div
-        className={styles.footerBottom}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true }}
-      >
+      <div className={styles.footerBottom}>
         <div className={styles.socialLinks}>
-          <a href="https://github.com/mlnaarianto" target="_blank" rel="noreferrer">
+          <a href="https://github.com/mlnaarianto" target="_blank" rel="noreferrer" aria-label="GitHub">
             <FaGithub />
           </a>
 
@@ -170,6 +149,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/maulana-arianto-4a32a8370/"
             target="_blank"
             rel="noreferrer"
+            aria-label="LinkedIn"
           >
             <FaLinkedin />
           </a>
@@ -178,15 +158,16 @@ export default function Footer() {
             href="https://www.instagram.com/_mlna.arianto/"
             target="_blank"
             rel="noreferrer"
+            aria-label="Instagram"
           >
             <FaInstagram />
           </a>
 
-          {/* FACEBOOK */}
           <a
             href="https://www.facebook.com/mlna.arianto"
             target="_blank"
             rel="noreferrer"
+            aria-label="Facebook"
           >
             <FaFacebook />
           </a>
@@ -195,13 +176,14 @@ export default function Footer() {
             href="https://x.com/MaulanaArianto"
             target="_blank"
             rel="noreferrer"
+            aria-label="X (Twitter)"
           >
             <FaXTwitter />
           </a>
         </div>
 
         <p>© {currentYear} Maulana Arianto. All rights reserved.</p>
-      </motion.div>
+      </div>
     </footer>
   )
 }

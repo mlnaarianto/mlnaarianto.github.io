@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
 import { FaExternalLinkAlt, FaGithub, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
@@ -119,7 +118,7 @@ const projects: Project[] = [
 
 const itemsPerPage = 3
 
-// Komponen kecil untuk gambar project, mendukung carousel jika ada lebih dari 1 gambar
+// Komponen gambar project dengan navigasi carousel yang ringan
 function ProjectImage({ project }: { project: Project }) {
   const hasMultiple = project.images && project.images.length > 1
   const [current, setCurrent] = useState(0)
@@ -144,17 +143,11 @@ function ProjectImage({ project }: { project: Project }) {
 
   return (
     <div className={containerClass}>
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={current}
-          src={gallery[current]}
-          alt={project.title}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        />
-      </AnimatePresence>
+      <img
+        src={gallery[current]}
+        alt={project.title}
+        className={styles.activeImage}
+      />
 
       {hasMultiple && (
         <>
@@ -214,10 +207,10 @@ export default function Projects() {
     filter === 'all'
       ? projects
       : projects.filter(project =>
-        project.tags.some(tag =>
-          tag.toLowerCase().includes(filter.toLowerCase())
+          project.tags.some(tag =>
+            tag.toLowerCase().includes(filter.toLowerCase())
+          )
         )
-      )
 
   const totalPages = Math.max(1, Math.ceil(filteredProjects.length / itemsPerPage))
 
@@ -226,7 +219,6 @@ export default function Projects() {
     currentPage * itemsPerPage
   )
 
-  // Reset ke halaman 1 setiap kali filter berubah
   useEffect(() => {
     setCurrentPage(1)
   }, [filter])
@@ -238,61 +230,28 @@ export default function Projects() {
   }
 
   return (
-    <motion.section
-      ref={ref}
-      id="projects"
-      className={`${styles.section} projects-section`}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
+    <section ref={ref} id="projects" className={`${styles.section} projects-section`}>
       <div className={styles.sectionHeader}>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Projects
-        </motion.h2>
-
-        <motion.div
-          className={styles.underline}
-          initial={{ width: 0 }}
-          animate={inView ? { width: '80px' } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        />
+        <h2 className={styles.sectionTitle}>Projects</h2>
+        <div className={styles.underline} />
       </div>
 
       {/* FILTER */}
-      <motion.div
-        className={styles.filterButtons}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+      <div className={styles.filterButtons}>
         {['all', 'PHP', 'laravel', 'react', 'iot', 'codeigniter', 'flutter'].map(f => (
-          <motion.button
+          <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ''}`}
             onClick={() => setFilter(f)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
-          </motion.button>
+          </button>
         ))}
-      </motion.div>
+      </div>
 
       <div className={styles.projectsGrid}>
-        {paginatedProjects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            className={styles.projectCard}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 * index }}
-            whileHover={{ y: -10 }}
-          >
+        {paginatedProjects.map((project) => (
+          <div key={project.title} className={styles.projectCard}>
             <ProjectImage project={project} />
 
             <div className={styles.projectContent}>
@@ -305,18 +264,13 @@ export default function Projects() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* PAGINATION */}
       {totalPages > 1 && (
-        <motion.div
-          className={styles.pagination}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className={styles.pagination}>
           <button
             className={styles.pageArrow}
             onClick={() => goToPage(currentPage - 1)}
@@ -344,8 +298,8 @@ export default function Projects() {
           >
             <FaChevronRight />
           </button>
-        </motion.div>
+        </div>
       )}
-    </motion.section>
+    </section>
   )
 }

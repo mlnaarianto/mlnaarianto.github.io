@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -119,63 +118,30 @@ export default function Blog() {
   }
 
   return (
-    <motion.section
-      ref={ref}
-      id="blog"
-      className={`${styles.section} blog-section`}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
+    <section ref={ref} id="blog" className={`${styles.section} blog-section`}>
       {/* ===== HEADER ===== */}
       <div className={styles.sectionHeader}>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Blog
-        </motion.h2>
-
-        <motion.div
-          className={styles.underline}
-          initial={{ width: 0 }}
-          animate={inView ? { width: '80px' } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        />
+        <h2 className={styles.sectionTitle}>Blog</h2>
+        <div className={styles.underline} />
       </div>
 
       {/* ===== FILTER ===== */}
-      <motion.div
-        className={styles.filterButtons}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+      <div className={styles.filterButtons}>
         {categories.map(category => (
-          <motion.button
+          <button
             key={category}
             className={`${styles.filterBtn} ${filter === category ? styles.active : ''}`}
             onClick={() => setFilter(category)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
-          </motion.button>
+          </button>
         ))}
-      </motion.div>
+      </div>
 
       {/* ===== BLOG GRID ===== */}
       <div className={styles.blogGrid}>
-        {paginatedPosts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            className={styles.blogCard}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 * index }}
-            whileHover={{ y: -10 }}
-          >
+        {paginatedPosts.map((post) => (
+          <div key={post.id} className={styles.blogCard}>
             {/* IMAGE */}
             <div className={styles.blogImage}>
               <img src={post.image} alt={post.title} />
@@ -210,30 +176,20 @@ export default function Blog() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* ===== EMPTY STATE ===== */}
       {filteredPosts.length === 0 && (
-        <motion.div
-          className={styles.noPosts}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-        >
+        <div className={styles.noPosts}>
           <p>No posts found in this category.</p>
-        </motion.div>
+        </div>
       )}
 
       {/* ===== PAGINATION ===== */}
       {totalPages > 1 && (
-        <motion.div
-          className={styles.pagination}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className={styles.pagination}>
           <button
             className={styles.pageArrow}
             onClick={() => goToPage(currentPage - 1)}
@@ -261,8 +217,8 @@ export default function Blog() {
           >
             <FaChevronRight />
           </button>
-        </motion.div>
+        </div>
       )}
-    </motion.section>
+    </section>
   )
 }
