@@ -36,8 +36,9 @@ export default function About() {
 
       <div className={styles.aboutContent}>
         <div className={styles.aboutText}>
+          {/* PERUBAHAN TEKS ADA DI PARAGRAF INI */}
           <p>
-            I am a <strong>Software Engineering Technology</strong> student at
+            I am a <strong>Software Engineering Technology</strong> graduate from
             <strong> Batam State Polytechnic</strong> who enjoys turning ideas into
             functional and well-designed web applications.
           </p>

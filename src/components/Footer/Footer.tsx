@@ -73,7 +73,7 @@ export default function Footer() {
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
               <FaEnvelope />
-              <span>maulanaarianto592@gmail.com</span>
+              <span>maulanaarianto321@gmail.com</span>
             </div>
 
             <div className={styles.contactItem}>

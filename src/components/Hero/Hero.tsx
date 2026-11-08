@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { FaArrowDown } from 'react-icons/fa'
-import profileImg from '../../assets/images/which.png'
 import styles from './Hero.module.css'
 
 export default function Hero() {
@@ -61,7 +60,8 @@ export default function Hero() {
 
         <div className={styles.heroImage}>
           <div className={styles.profileImage}>
-            <img className={styles.profileImageImg} src={profileImg} alt="Profile" />
+            {/* PERUBAHAN ADA DI BARIS BAWAH INI */}
+            <img className={styles.profileImageImg} src="/foto.jpeg" alt="Profile" />
           </div>
         </div>
       </div>
