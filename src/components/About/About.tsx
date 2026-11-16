@@ -4,22 +4,30 @@ import styles from './About.module.css'
 
 export default function About() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 })
-  const [experience, setExperience] = useState(0)
+  const [studyYears, setStudyYears] = useState(0)
 
   useEffect(() => {
-    if (inView) {
-      const expTimer = setTimeout(() => {
-        const interval = setInterval(() => {
-          setExperience(prev => {
-            if (prev < 4) return prev + 1
-            clearInterval(interval)
-            return prev
-          })
-        }, 100)
-        return () => clearInterval(interval)
-      }, 300)
+    if (!inView) return
 
-      return () => clearTimeout(expTimer)
+    // Memberikan tipe data untuk TypeScript agar tidak error merah
+    let intervalId: ReturnType<typeof setInterval> | undefined
+
+    const timeoutId = setTimeout(() => {
+      intervalId = setInterval(() => {
+        setStudyYears(prev => {
+          if (prev >= 4) {
+            // Pengecekan agar TypeScript yakin intervalId ada
+            if (intervalId) clearInterval(intervalId)
+            return prev
+          }
+          return prev + 1
+        })
+      }, 100)
+    }, 300)
+
+    return () => {
+      clearTimeout(timeoutId)
+      if (intervalId) clearInterval(intervalId)
     }
   }, [inView])
 
@@ -28,7 +36,8 @@ export default function About() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>About Me</h2>
         <div className={styles.underline} />
-        {/* Tambahan sub-teks penjelasan */}
+        
+        {/* Sub-teks penjelasan */}
         <p className={styles.sectionSubtitle}>
           Get to know more about my background, academic journey, and passion for software engineering.
         </p>
@@ -36,7 +45,6 @@ export default function About() {
 
       <div className={styles.aboutContent}>
         <div className={styles.aboutText}>
-          {/* PERUBAHAN TEKS ADA DI PARAGRAF INI */}
           <p>
             I am a <strong>Software Engineering Technology</strong> graduate from
             <strong> Batam State Polytechnic</strong> who enjoys turning ideas into
@@ -56,16 +64,19 @@ export default function About() {
         </div>
 
         <div className={styles.aboutStats}>
+          {/* Card Pertama: Diubah menjadi Years of Study */}
           <div className={styles.statCard}>
-            <h3>{experience}+</h3>
-            <p>Years Experience</p>
+            <h3>{studyYears}</h3>
+            <p>Years of Study (3 Years PBL + ±1 Year Internship)</p>
           </div>
 
+          {/* Card Kedua */}
           <div className={styles.statCard}>
-            <h3>12+</h3>
+            <h3>5+</h3>
             <p>Projects Completed</p>
           </div>
 
+          {/* Card Ketiga */}
           <div className={styles.statCard}>
             <h3>100%</h3>
             <p>Commitment to Learning</p>

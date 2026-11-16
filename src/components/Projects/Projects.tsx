@@ -17,11 +17,6 @@ import roompracticeImg1 from '../../assets/images/roompractice/1.png'
 import roompracticeImg2 from '../../assets/images/roompractice/2.png'
 import roompracticeImg3 from '../../assets/images/roompractice/3.png'
 
-// Import gambar Printer Server dari assets
-import printerserverImg1 from '../../assets/images/printerserver/1.png'
-import printerserverImg2 from '../../assets/images/printerserver/2.png'
-import printerserverImg3 from '../../assets/images/printerserver/3.png'
-
 // Import gambar Flutter Rentalcar dari assets
 import rentalcarImg1 from '../../assets/images/flutter-rentalcar/1.jpeg'
 import rentalcarImg2 from '../../assets/images/flutter-rentalcar/2.jpeg'
@@ -65,15 +60,6 @@ const projects: Project[] = [
     image: roompracticeImg1,
     images: [roompracticeImg1, roompracticeImg2, roompracticeImg3],
     github: 'https://github.com/mlnaarianto/Room-Practice',
-    demo: ''
-  },
-  {
-    title: 'IoT Printer Server with RFID',
-    description: 'An IoT-based printer server deployment system built on ARM architecture with RFID card authentication. This project enables centralized printer management, secure access control, and real-time monitoring.',
-    tags: ['IoT', 'Laravel', 'MySQL'],
-    image: printerserverImg1,
-    images: [printerserverImg1, printerserverImg2, printerserverImg3],
-    github: 'https://github.com/mlnaarianto/Printer-server-with-RFID-Card-IoT',
     demo: ''
   },
   {
@@ -232,15 +218,15 @@ export default function Projects() {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.underline} />
-        {/* Tambahan sub-teks/deskripsi singkat di bawah judul */}
+        {/* Update teks menjadi full-stack and mobile projects */}
         <p className={styles.sectionSubtitle}>
-          Here are some of the full-stack, mobile, and IoT projects I have built and worked on.
+          Here are some of the full-stack and mobile projects I have built and worked on.
         </p>
       </div>
 
-      {/* FILTER */}
+      {/* FILTER (tombol 'iot' dihapus) */}
       <div className={styles.filterButtons}>
-        {['all', 'PHP', 'laravel', 'react', 'iot', 'codeigniter', 'flutter'].map(f => (
+        {['all', 'PHP', 'laravel', 'react', 'codeigniter', 'flutter'].map(f => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ''}`}

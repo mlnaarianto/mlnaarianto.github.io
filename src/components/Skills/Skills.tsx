@@ -20,7 +20,7 @@ const skillCategories: SkillCategory[] = [
     label: 'Programming Languages',
     skills: [
       { name: 'PHP', level: 90, color: '#6C63FF' },
-      { name: 'Ruby', level: 75, color: '#CC342D' },
+      { name: 'Ruby', level: 70, color: '#CC342D' },
       { name: 'Go', level: 80, color: '#00ADD8' },
       { name: 'Dart', level: 75, color: '#0175C2' },
       { name: 'Python', level: 80, color: '#FFD43B' }
@@ -35,7 +35,7 @@ const skillCategories: SkillCategory[] = [
       { name: 'Flutter', level: 75, color: '#4D96FF' },
       { name: 'React', level: 75, color: '#61C0BF' },
       { name: 'Gin', level: 80, color: '#00ADD8' },
-      { name: 'Rails', level: 75, color: '#CC0000' },
+      { name: 'Rails', level: 70, color: '#CC0000' },
       { name: 'FastAPI', level: 80, color: '#009688' }
     ]
   },
@@ -51,7 +51,7 @@ const skillCategories: SkillCategory[] = [
     id: 'others',
     label: 'Others',
     skills: [
-      { name: 'IoT', level: 65, color: '#43AA8B' }
+      { name: 'IoT', level: 45, color: '#43AA8B' }
     ]
   }
 ]
